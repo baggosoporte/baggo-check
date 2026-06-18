@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Baggo Check</title>
+</head>
+<body>
+  <p>Cargando...</p>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    if (!id) {
+      window.location.href = 'https://www.baggo.es';
+    } else {
+      fetch('https://hook.eu1.make.com/mrckrnypnyg41do2wh946u6mb3eeqmc9?reserva_id=' + id)
+        .then(r => r.json())
+        .then(data => {
+          const base_entrada = 'https://form.jotform.com/261442978616063';
+          const base_salida = 'https://form.jotform.com/261442577056359';
+          const p = '?reserva_id=' + encodeURIComponent(data.reserva_id)
+            + '&nombre=' + encodeURIComponent(data.nombre)
+            + '&email=' + encodeURIComponent(data.email)
+            + '&telefono=' + encodeURIComponent(data.telefono)
+            + '&fecha_inicio=' + encodeURIComponent(data.fecha_inicio)
+            + '&fecha_fin=' + encodeURIComponent(data.fecha_fin)
+            + '&mochila=' + encodeURIComponent(data.mochila)
+            + '&cabina=' + encodeURIComponent(data.cabina)
+            + '&grande=' + encodeURIComponent(data.grande)
+            + '&subtotal=' + encodeURIComponent(data.subtotal);
+
+          if (data.estado === 'Pendiente') {
+            window.location.href = base_entrada + p;
+          } else if (data.estado === 'En custodia') {
+            window.location.href = base_salida + p;
+          } else {
+            window.location.href = 'https://www.baggo.es';
+          }
+        });
+    }
+  </script>
+</body>
+</html>
