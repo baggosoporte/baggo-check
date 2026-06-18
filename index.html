@@ -29,7 +29,7 @@
             + '&grande=' + encodeURIComponent(data.grande)
             + '&subtotal=' + encodeURIComponent(data.subtotal);
 
-          if (data.estado === 'Pendiente') {
+          if (data.estado === 'Pendiente' || data.estado === 'Confirmada') {
             window.location.href = base_entrada + p;
           } else if (data.estado === 'En custodia') {
             window.location.href = base_salida + p;
