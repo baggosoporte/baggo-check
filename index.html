@@ -40,19 +40,19 @@
           const tel = splitTelefono(data.telefono);
 
           const p = new URLSearchParams({
-            'q2_fullname0[first]':   firstName,
-            'q2_fullname0[last]':    lastName,
-            'email':                 data.email    || '',
-            'numeroDe[area]':        tel[0],
-            'numeroDe[phone]':       tel[1],
-            'q5_dropdown3':          data.local    || '',
-            'fechaInicio[litemode]': formatFecha(data.fecha_inicio),
-            'fechaFinal[litemode]':  formatFecha(data.fecha_fin),
-            'horaCheck':             data.hora_entrega  || '',
-            'horaCheck80':           data.hora_recogida || '',
-            'bolsoO':                data.mochila  || '0',
-            'maletaDe':              data.cabina   || '0',
-            'maletaGrande':          data.grande   || '0',
+            'q2_fullname0[first]': firstName,
+            'q2_fullname0[last]':  lastName,
+            'email':               data.email         || '',
+            'numeroDe[area]':      tel[0],
+            'numeroDe[phone]':     tel[1],
+            'q5_dropdown3':        data.local         || '',
+            'fechaCheck':          formatFecha(data.fecha_inicio),
+            'fechaCheck82':        formatFecha(data.fecha_fin),
+            'horaCheck':           data.hora_entrega  || '',
+            'horaCheck80':         data.hora_recogida || '',
+            'bolsoO':              data.mochila       || '0',
+            'maletaDe':            data.cabina        || '0',
+            'maletaGrande':        data.grande        || '0',
           });
 
           if (data.estado === 'Pendiente' || data.estado === 'Confirmada') {
