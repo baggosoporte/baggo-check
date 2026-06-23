@@ -17,22 +17,53 @@
         .then(r => r.json())
         .then(data => {
           const base_entrada = 'https://form.jotform.com/261583126431352';
-          const base_salida = 'https://form.jotform.com/261442577056359';
-          const p = '?reserva_id=' + encodeURIComponent(data.reserva_id)
-            + '&nombre=' + encodeURIComponent(data.nombre)
-            + '&email=' + encodeURIComponent(data.email)
-            + '&telefono=' + encodeURIComponent(data.telefono)
-            + '&fecha_inicio=' + encodeURIComponent(data.fecha_inicio)
-            + '&fecha_fin=' + encodeURIComponent(data.fecha_fin)
-            + '&mochila=' + encodeURIComponent(data.mochila)
-            + '&cabina=' + encodeURIComponent(data.cabina)
-            + '&grande=' + encodeURIComponent(data.grande)
-            + '&subtotal=' + encodeURIComponent(data.subtotal);
+          const base_salida  = 'https://form.jotform.com/261442577056359';
+
+          const nombreParts = (data.nombre || '').trim().split(' ');
+          const firstName = nombreParts[0] || '';
+          const lastName  = nombreParts.slice(1).join(' ') || '';
+
+          function splitFecha(f) {
+            if (!f) return ['', '', ''];
+            const parts = f.split(/[\s\-\.]/);
+            if (parts[0].length === 4) return [parts[2], parts[1], parts[0]];
+            return [parts[0], parts[1], parts[2]];
+          }
+          const fi = splitFecha(data.fecha_inicio);
+          const ff = splitFecha(data.fecha_fin);
+
+          function splitHora(h) {
+            if (!h) return ['', ''];
+            return (h || '').split(':');
+          }
+          const he = splitHora(data.hora_entrega);
+          const hr = splitHora(data.hora_recogida);
+
+          const p = new URLSearchParams({
+            'q2_fullname0[first]':       firstName,
+            'q2_fullname0[last]':        lastName,
+            'email':                     data.email    || '',
+            'numeroDe[phone]':           data.telefono || '',
+            'q5_dropdown3':              data.local    || '',
+            'fechaInicio[day]':          fi[0],
+            'fechaInicio[month]':        fi[1],
+            'fechaInicio[year]':         fi[2],
+            'fechaFinal[day]':           ff[0],
+            'fechaFinal[month]':         ff[1],
+            'fechaFinal[year]':          ff[2],
+            'horaEntrega[hourSelect]':   he[0],
+            'horaEntrega[minuteSelect]': he[1],
+            'hora31[hourSelect]':        hr[0],
+            'hora31[minuteSelect]':      hr[1],
+            'bolsoO':                    data.mochila  || '0',
+            'maletaDe':                  data.cabina   || '0',
+            'maletaGrande':              data.grande   || '0',
+          });
 
           if (data.estado === 'Pendiente' || data.estado === 'Confirmada') {
-            window.location.href = base_entrada + p;
+            window.location.href = base_entrada + '?' + p.toString();
           } else if (data.estado === 'En custodia') {
-            window.location.href = base_salida + p;
+            window.location.href = base_salida + '?' + p.toString();
           } else {
             window.location.href = 'https://www.baggo.es';
           }
