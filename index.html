@@ -25,17 +25,17 @@
 
           function splitFecha(f) {
             if (!f) return ['', '', ''];
-            const parts = f.split(/[\s\-\.]/);
-            if (parts[0].length === 4) return [parts[2], parts[1], parts[0]];
+            const parts = f.trim().split(' ');
             return [parts[0], parts[1], parts[2]];
           }
-          const fi = splitFecha(data.fecha_inicio);
-          const ff = splitFecha(data.fecha_fin);
 
           function splitHora(h) {
             if (!h) return ['', ''];
             return (h || '').split(':');
           }
+
+          const fi = splitFecha(data.fecha_inicio);
+          const ff = splitFecha(data.fecha_fin);
           const he = splitHora(data.hora_entrega);
           const hr = splitHora(data.hora_recogida);
 
