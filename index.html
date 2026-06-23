@@ -38,7 +38,7 @@
           const p = new URLSearchParams({
             'nombreCompleto':    data.nombre         || '',
             'email':             data.email          || '',
-            'numeroDe':          'numeroDe': data.numero_reserva || '',
+            'numeroDe':          data.numero_reserva || '',
             'numeroDe85':        tel[1],
             'q5_dropdown3':      data.local          || '',
             'fechaCheck':        formatFecha(data.fecha_inicio),
@@ -50,7 +50,6 @@
             'maletaGrande':      data.grande         || '0',
             'numeroDe59':        data.subtotal       || '',
             'importeTotal':      data.subtotal       || '',
-            'q86':               data.numero_reserva || '',
           });
 
           if (data.estado === 'Pendiente' || data.estado === 'Confirmada') {
