@@ -53,9 +53,9 @@
           });
 
           if (data.estado === 'Pendiente' || data.estado === 'Confirmada') {
-            window.location.href = base_entrada + '?' + p.toString() + '&recordId=' + id;
+            window.location.href = base_entrada + '?' + p.toString();
           } else if (data.estado === 'En custodia') {
-            window.location.href = base_salida + '?' + p.toString() + '&recordId=' + id;
+            window.location.href = base_salida + '?' + p.toString();
           } else {
             window.location.href = 'https://www.baggo.es';
           }
