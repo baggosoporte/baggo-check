@@ -50,13 +50,12 @@
             'maletaGrande':      data.grande         || '0',
             'numeroDe59':        data.subtotal       || '',
             'importeTotal':      data.subtotal       || '',
-            'recordId':          id             || '',
           });
 
           if (data.estado === 'Pendiente' || data.estado === 'Confirmada') {
-            window.location.href = base_entrada + '?' + p.toString();
+            window.location.href = base_entrada + '?' + p.toString() + '&recordId=' + id;
           } else if (data.estado === 'En custodia') {
-            window.location.href = base_salida + '?' + p.toString();
+            window.location.href = base_salida + '?' + p.toString() + '&recordId=' + id;
           } else {
             window.location.href = 'https://www.baggo.es';
           }
