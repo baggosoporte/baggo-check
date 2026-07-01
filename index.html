@@ -1,68 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Baggo Check</title>
+ <meta charset="UTF-8">
+ <title>Baggo Check</title>
 </head>
 <body>
-  <p>Cargando...</p>
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
+ <p>Cargando...</p>
+ <script>
+   const params = new URLSearchParams(window.location.search);
+   const id = params.get('id');
 
-    if (!id) {
-      window.location.href = 'https://www.baggo.es';
-    } else {
-      fetch('https://hook.eu1.make.com/mrckrnypnyg41do2wh946u6mb3eeqmc9?reserva_id=' + id)
-        .then(r => r.json())
-        .then(data => {
-          const base_entrada = 'https://form.jotform.com/261583126431352';
-          const base_salida  = 'https://form.jotform.com/261442577056359';
+   if (!id) {
+     window.location.href = 'https://www.baggo.es';
+   } else {
+     fetch('https://hook.eu1.make.com/mrckrnypnyg41do2wh946u6mb3eeqmc9?reserva_id=' + id)
+       .then(r => r.json())
+       .then(data => {
+         const base_entrada = 'https://form.jotform.com/261583126431352';
+         const base_salida  = 'https://form.jotform.com/261816190322351';
 
-          function formatFecha(f) {
-            if (!f) return '';
-            const parts = f.trim().split(' ');
-            return parts[0] + '-' + parts[1] + '-' + parts[2];
-          }
+         function formatFecha(f) {
+           if (!f) return '';
+           const parts = f.trim().split(' ');
+           return parts[0] + '-' + parts[1] + '-' + parts[2];
+         }
 
-          function splitTelefono(t) {
-            if (!t) return ['', ''];
-            const clean = t.replace(/\s/g, '');
-            const match = clean.match(/^\+?(\d{2})(\d+)$/);
-            if (match) return [match[1], match[2]];
-            return ['', clean];
-          }
+         function splitTelefono(t) {
+           if (!t) return ['', ''];
+           const clean = t.replace(/\s/g, '');
+           const match = clean.match(/^\+?(\d{2})(\d+)$/);
+           if (match) return [match[1], match[2]];
+           return ['', clean];
+         }
 
-          const tel = splitTelefono(data.telefono);
+         const tel = splitTelefono(data.telefono);
 
-          const p = new URLSearchParams({
-            'nombreCompleto':    data.nombre         || '',
-            'email':             data.email          || '',
-            'numeroDe':          data.numero_reserva || '',
-            'numeroDe85':        tel[1],
-            'q5_dropdown3':      data.local          || '',
-            'fechaCheck':        formatFecha(data.fecha_inicio),
-            'fechaCheck83':      formatFecha(data.fecha_fin),
-            'horaCheck':         data.hora_entrega   || '',
-            'horaCheck80':       data.hora_recogida  || '',
-            'bolsoO':            data.mochila        || '0',
-            'maletaDe':          data.cabina         || '0',
-            'maletaGrande':      data.grande         || '0',
-            'numeroDe59':        data.subtotal       || '',
-            'importeTotal':      data.subtotal       || '',
-          });
+         const p = new URLSearchParams({
+           'nombreCompleto':    data.nombre         || '',
+           'email':             data.email          || '',
+           'numeroDe':          data.numero_reserva || '',
+           'numeroDe85':        tel[1],
+           'q5_dropdown3':      data.local          || '',
+           'fechaCheck':        formatFecha(data.fecha_inicio),
+           'fechaCheck83':      formatFecha(data.fecha_fin),
+           'horaCheck':         data.hora_entrega   || '',
+           'horaCheck80':       data.hora_recogida  || '',
+           'bolsoO':            data.mochila        || '0',
+           'maletaDe':          data.cabina         || '0',
+           'maletaGrande':      data.grande         || '0',
+           'numeroDe59':        data.subtotal       || '',
+           'importeTotal':      data.subtotal       || '',
+         });
 
-          if (data.estado === 'Pendiente' || data.estado === 'Confirmada') {
-            window.location.href = base_entrada + '?' + p.toString();
-          } else if (data.estado === 'En custodia') {
-            window.location.href = base_salida + '?' + p.toString();
-          } else if (data.estado === 'Entregada') {
-            document.body.innerHTML = '<div style="text-align:center;padding:50px;font-family:sans-serif"><h2>✅ Equipaje ya entregado</h2><p>Este equipaje ya fue recogido por el cliente.</p></div>';
-          } else {
-            window.location.href = 'https://www.baggo.es';
-          }
-        });
-    }
-  </script>
+         if (data.estado === 'Pendiente' || data.estado === 'Confirmada') {
+           window.location.href = base_entrada + '?' + p.toString();
+         } else if (data.estado === 'En custodia') {
+           window.location.href = base_salida + '?' + p.toString();
+         } else if (data.estado === 'Entregada') {
+           document.body.innerHTML = '<div style="text-align:center;padding:50px;font-family:sans-serif"><h2>✅ Equipaje ya entregado</h2><p>Este equipaje ya fue recogido por el cliente.</p></div>';
+         } else {
+           window.location.href = 'https://www.baggo.es';
+         }
+       });
+   }
+ </script>
 </body>
 </html>
