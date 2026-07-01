@@ -56,6 +56,8 @@
             window.location.href = base_entrada + '?' + p.toString();
           } else if (data.estado === 'En custodia') {
             window.location.href = base_salida + '?' + p.toString();
+          } else if (data.estado === 'Entregada') {
+            document.body.innerHTML = '<div style="text-align:center;padding:50px;font-family:sans-serif"><h2>✅ Equipaje ya entregado</h2><p>Este equipaje ya fue recogido por el cliente.</p></div>';
           } else {
             window.location.href = 'https://www.baggo.es';
           }
